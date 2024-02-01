@@ -1,11 +1,11 @@
-var NUM = require(__dirname + '/Num.js');
+var NUM = require(__dirname + '/Num.js'); // needs to be in package.json
 module.exports = cc = {
   Num: function (num) {
     if (typeof num == 'string') {
       return NUM(num.replace(/\"/g,'').replace(/\'/g, ''));
     } else return NUM(num);
   },
-  Decimal: require(__dirname + '/../node_modules/decimal.js-light'),
+  Decimal: require(__dirname + '/../node_modules/decimal.js-light'), // needs to be in package.json
   noE: function (x) {
     if (Math.abs(x) < 1.0) {
       var e = parseInt(x.toString().split('e-')[1]);
