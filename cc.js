@@ -48,43 +48,6 @@ module.exports = cc = {
     coin = coin.split('').reverse().join('');
     return coin;
   },
-  qsatToReadable: function (coin, input_val) {
-    if (coin == undefined) coin = "0";
-    coin = coin + '';
-    for (; coin.length > 16 && coin[0] == '0';) coin = coin.substr(1);
-    for (; coin.length < 16;) coin = '0' + coin;
-    coin = coin.split('').reverse().join('');
-    if (coin.length > 16) coin = coin.substr(0, 16) + '.' + coin.substr(16);
-    else coin = coin + '.0';
-    var qsat = coin.substr(0, 8)
-    .replace(/0/g, '₀')
-    .replace(/1/g, '₁')
-    .replace(/2/g, '₂')
-    .replace(/3/g, '₃')
-    .replace(/4/g, '₄')
-    .replace(/5/g, '₅')
-    .replace(/6/g, '₆')
-    .replace(/7/g, '₇')
-    .replace(/8/g, '₈')
-    .replace(/9/g, '₉');
-    if (!input_val) qsat = '<b style="font-size:11px;">' + (qsat.split('').reverse().join('')) + '</b>';
-    else qsat = qsat.split('').reverse().join('');
-    coin = coin.substr(8);
-    coin = coin.split('').reverse().join('');
-    return coin + qsat;
-  },
-  satToReadable: function (coin) {
-    if (coin == undefined) coin = "0";
-    coin = coin + '';
-    coin = coin.replace(/\"/g, '').replace(/\'/g, '');
-    for (; coin.length > 8 && coin[0] == '0';) coin = coin.substr(1);
-    for (; coin.length < 8;) coin = '0' + coin;
-    coin = coin.split('').reverse().join('');
-    if (coin.length > 8) coin = coin.substr(0, 8) + '.' + coin.substr(8);
-    else coin = coin + '.0';
-    coin = coin.split('').reverse().join('');
-    return coin;
-  },
   coinToSat: function (coin) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
@@ -140,6 +103,43 @@ module.exports = cc = {
     sat = sat + '';
     sat = sat.replace(/\"/g, '').replace(/\'/g, '');
     return (NUM(sat).multiply(NUM('100000000')).toString());
+  },
+  qsatToReadable: function (coin, input_val) {
+    if (coin == undefined) coin = "0";
+    coin = coin + '';
+    for (; coin.length > 16 && coin[0] == '0';) coin = coin.substr(1);
+    for (; coin.length < 16;) coin = '0' + coin;
+    coin = coin.split('').reverse().join('');
+    if (coin.length > 16) coin = coin.substr(0, 16) + '.' + coin.substr(16);
+    else coin = coin + '.0';
+    var qsat = coin.substr(0, 8)
+    .replace(/0/g, '₀')
+    .replace(/1/g, '₁')
+    .replace(/2/g, '₂')
+    .replace(/3/g, '₃')
+    .replace(/4/g, '₄')
+    .replace(/5/g, '₅')
+    .replace(/6/g, '₆')
+    .replace(/7/g, '₇')
+    .replace(/8/g, '₈')
+    .replace(/9/g, '₉');
+    if (!input_val) qsat = '<b style="font-size:11px;">' + (qsat.split('').reverse().join('')) + '</b>';
+    else qsat = qsat.split('').reverse().join('');
+    coin = coin.substr(8);
+    coin = coin.split('').reverse().join('');
+    return coin + qsat;
+  },
+  satToReadable: function (coin) {
+    if (coin == undefined) coin = "0";
+    coin = coin + '';
+    coin = coin.replace(/\"/g, '').replace(/\'/g, '');
+    for (; coin.length > 8 && coin[0] == '0';) coin = coin.substr(1);
+    for (; coin.length < 8;) coin = '0' + coin;
+    coin = coin.split('').reverse().join('');
+    if (coin.length > 8) coin = coin.substr(0, 8) + '.' + coin.substr(8);
+    else coin = coin + '.0';
+    coin = coin.split('').reverse().join('');
+    return coin;
   },
   calcShare: function (my_balance, total, new_reward) {
     if (my_balance == undefined) my_balance = "0";
