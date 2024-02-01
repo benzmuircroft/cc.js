@@ -6,7 +6,7 @@ module.exports = cc = {
     } else return NUM(num);
   },
   Decimal: require(__dirname + '/../node_modules/decimal.js-light'),
-  no_e: function (x) {
+  noE: function (x) {
     if (Math.abs(x) < 1.0) {
       var e = parseInt(x.toString().split('e-')[1]);
       if (e) {
@@ -30,14 +30,14 @@ module.exports = cc = {
     coin = (coin + '0000000000000000').split('.');
     return coin[0] + '.' + (coin[1].substr(0,n));
   },
-  qsat_to_sat: function (qsat) {
+  qsatToSat: function (qsat) {
     if (qsat == undefined) qsat = "0";
       qsat = qsat + '';
       qsat = qsat.replace(/\"/g, '').replace(/\'/g, '');
       if (qsat == "0") return "0";
       else return (qsat.length < 9) ? ("0") : (NUM(qsat).divide(NUM('100000000')).toString());
     },
-  qsat_to_qoin: function (coin) {
+  qsatToCoin: function (coin) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
     for (; coin.length > 16 && coin[0] == '0';) coin = coin.substr(1);
@@ -48,7 +48,7 @@ module.exports = cc = {
     coin = coin.split('').reverse().join('');
     return coin;
   },
-  qsat_to_readable: function (coin, input_val) {
+  qsatToReadable: function (coin, input_val) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
     for (; coin.length > 16 && coin[0] == '0';) coin = coin.substr(1);
@@ -73,7 +73,7 @@ module.exports = cc = {
     coin = coin.split('').reverse().join('');
     return coin + qsat;
   },
-  sat_to_readable: function (coin) {
+  satToReadable: function (coin) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
     coin = coin.replace(/\"/g, '').replace(/\'/g, '');
@@ -85,7 +85,7 @@ module.exports = cc = {
     coin = coin.split('').reverse().join('');
     return coin;
   },
-  coin_to_sat: function (coin) { // not used so far ?
+  coinToSat: function (coin) { // not used so far ?
     if (coin == undefined) coin = "0";
     coin = coin + '';
     coin = this.fixed(coin, 8);
@@ -97,7 +97,7 @@ module.exports = cc = {
     for (; coin[0] == '0';) coin = coin.substr(1);
     return coin.replace('\n', '');
   },
-  coin_to_qsat: function (coin) { // not used so far ?
+  coinToQsat: function (coin) { // not used so far ?
     if (coin == undefined) coin = "0";
     coin = coin + '';
     coin = this.fixed(coin, 16);
@@ -109,7 +109,7 @@ module.exports = cc = {
     for (; coin[0] == '0';) coin = coin.substr(1);
     return coin.replace('\n', '');
   },
-  sat_to_coin: function (sat) {
+  satToCoin: function (sat) {
     if (sat == undefined) sat = "0";
     sat = sat + '';
     sat = sat.replace(/\"/g, '').replace(/\'/g, '').replace(/\./g, '');
@@ -122,7 +122,7 @@ module.exports = cc = {
     sat[1] = sat[1].split('').reverse().join('');
     return sat[0] + '.' + (sat[1].substr(0, 8));
   },
-  qsat_to_coin: function (qsat) {
+  qsatToCoin: function (qsat) {
     if (qsat == undefined) qsat = "0";
     qsat = qsat + '';
     qsat = qsat.replace(/\"/g, '').replace(/\'/g, '').replace(/\./g, '');
@@ -135,13 +135,13 @@ module.exports = cc = {
     qsat[1] = qsat[1].split('').reverse().join('');
     return qsat[0] + '.' + (qsat[1].substr(0, 8));
   },
-  sat_to_qsat: function (sat) {
+  satToQsat: function (sat) {
     if (sat == undefined) sat = "0";
     sat = sat + '';
     sat = sat.replace(/\"/g, '').replace(/\'/g, '');
     return (NUM(sat).multiply(NUM('100000000')).toString());
   },
-  calc_share: function (my_balance, total, new_reward) { // used 3 times ?
+  calcShare: function (my_balance, total, new_reward) { // used 3 times ?
     if (my_balance == undefined) my_balance = "0";
     if (total == undefined) total = "0";
     if (new_reward == undefined) new_reward = "0";
@@ -150,7 +150,7 @@ module.exports = cc = {
       my_balance = my_balance.replace(/\"/g, '').replace(/\'/g, '');
       total = total.replace(/\"/g, '').replace(/\'/g, '');
       new_reward = new_reward.replace(/\"/g, '').replace(/\'/g, '');
-      var my_share_percent = cc.no_e(new cc.Decimal(new cc.Decimal(new cc.Decimal(my_balance).times(100)).dividedBy(total)).toFixed(16));
+      var my_share_percent = cc.noE(new cc.Decimal(new cc.Decimal(new cc.Decimal(my_balance).times(100)).dividedBy(total)).toFixed(16));
       if (my_share_percent == "0") return ["0", "0", "0"];
       else{
         var my_reward = new cc.Decimal(new cc.Decimal(new cc.Decimal(my_share_percent).times(new_reward)).dividedBy(100)).toString().split('.')[0];
@@ -158,7 +158,7 @@ module.exports = cc = {
         }
       }
     },
-  pct_to_share: function (percent, of_number) { // returns share
+  pctToShare: function (percent, of_number) { // returns share
     if (percent == undefined) percent="0";
     if (of_number == undefined) of_number = "0";
     if([percent, of_number].indexOf("0") !== -1) return "0";
@@ -166,14 +166,14 @@ module.exports = cc = {
       return new cc.Decimal(percent).times(of_number).dividedBy(100).toString().split('.')[0]; // (percent * total / 100)
     }
   },
-  share_to_pct: function (balance, total) {
+  shareToPct: function (balance, total) {
     if (balance == undefined) balance = "0";
     if (total == undefined) total = "0";
     balance = balance + '';
     total = total + '';
     if (balance == "0" || total == "0") return "0";
     else {
-      return cc.no_e(new cc.Decimal(new cc.Decimal(new cc.Decimal(balance).times(100)).dividedBy(total)).toFixed(16)); // ((balance / total) * 100)
+      return cc.noE(new cc.Decimal(new cc.Decimal(new cc.Decimal(balance).times(100)).dividedBy(total)).toFixed(16)); // ((balance / total) * 100)
     }
   },
   add: function (a, b) {
