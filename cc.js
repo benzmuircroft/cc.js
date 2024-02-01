@@ -85,7 +85,7 @@ module.exports = cc = {
     coin = coin.split('').reverse().join('');
     return coin;
   },
-  coinToSat: function (coin) { // not used so far ?
+  coinToSat: function (coin) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
     coin = this.fixed(coin, 8);
@@ -97,7 +97,7 @@ module.exports = cc = {
     for (; coin[0] == '0';) coin = coin.substr(1);
     return coin.replace('\n', '');
   },
-  coinToQsat: function (coin) { // not used so far ?
+  coinToQsat: function (coin) {
     if (coin == undefined) coin = "0";
     coin = coin + '';
     coin = this.fixed(coin, 16);
@@ -141,7 +141,7 @@ module.exports = cc = {
     sat = sat.replace(/\"/g, '').replace(/\'/g, '');
     return (NUM(sat).multiply(NUM('100000000')).toString());
   },
-  calcShare: function (my_balance, total, new_reward) { // used 3 times ?
+  calcShare: function (my_balance, total, new_reward) {
     if (my_balance == undefined) my_balance = "0";
     if (total == undefined) total = "0";
     if (new_reward == undefined) new_reward = "0";
@@ -158,7 +158,7 @@ module.exports = cc = {
         }
       }
     },
-  pctToShare: function (percent, of_number) { // returns share
+  pctToShare: function (percent, of_number) {
     if (percent == undefined) percent="0";
     if (of_number == undefined) of_number = "0";
     if([percent, of_number].indexOf("0") !== -1) return "0";
